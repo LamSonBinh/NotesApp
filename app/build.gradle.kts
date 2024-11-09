@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.notesapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.recyclerview)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -49,4 +50,10 @@ dependencies {
     implementation("androidx.core:core:1.12.0")
 //    implementation("com.google.android.material:material:1.12.0")
     implementation("com.firebaseui:firebase-ui-firestore:8.0.0")
+
+    implementation("org.apache.poi:poi:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
+
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
 }
