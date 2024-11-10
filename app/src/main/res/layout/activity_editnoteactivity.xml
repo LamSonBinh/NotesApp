@@ -21,7 +21,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:id="@+id/edittitleofnote" />
+            android:id="@+id/edittitleofnote"
+            android:maxLength="20"/>
 
     </androidx.appcompat.widget.Toolbar>
 

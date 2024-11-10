@@ -112,14 +112,21 @@ public class notesactivity extends AppCompatActivity {
                 noteViewHolder.mnote.setBackgroundColor(noteViewHolder.itemView.getResources().getColor(colourcode, null));
 
                 noteViewHolder.notetitle.setText(firebasemodel.getTitle());
-                noteViewHolder.notecontent.setText(firebasemodel.getContent());
+
+                // Chỉ hiển thị 60 ký tự đầu tiên
+                String noteContent = firebasemodel.getContent();
+                if (noteContent.length() > 60) {
+                    noteViewHolder.notecontent.setText(noteContent.substring(0, 60) + "...");  // Thêm dấu "..." nếu nội dung dài
+                } else {
+                    noteViewHolder.notecontent.setText(noteContent);  // Hiển thị đầy đủ nếu ngắn hơn 60 ký tự
+                }
 
                 String docId = noteAdapter.getSnapshots().getSnapshot(i).getId();
 
                 noteViewHolder.itemView.setOnClickListener(v -> {
                     Intent intent = new Intent(v.getContext(), notedetails.class);
                     intent.putExtra("title", firebasemodel.getTitle());
-                    intent.putExtra("content", firebasemodel.getContent());
+                    intent.putExtra("content", firebasemodel.getContent());  // Chuyển nội dung đầy đủ khi vào chi tiết
                     intent.putExtra("noteId", docId);
 
                     v.getContext().startActivity(intent);
@@ -139,9 +146,6 @@ public class notesactivity extends AppCompatActivity {
 
                     popupMenu.getMenu().add("Delete").setOnMenuItemClickListener(item -> {
                         moveNoteToTrash(firebasemodel, docId); // Chuyển ghi chú vào trash
-
-
-                        // Thay vì xóa trong Firestore, chỉ cập nhật giao diện
                         Toast.makeText(v.getContext(), "Note moved to trash", Toast.LENGTH_SHORT).show();
                         return false;
                     });
@@ -156,10 +160,10 @@ public class notesactivity extends AppCompatActivity {
                         return false;
                     });
 
-
                     popupMenu.show();
                 });
             }
+
 
             @NonNull
             @Override

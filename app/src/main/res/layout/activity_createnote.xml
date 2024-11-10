@@ -26,7 +26,8 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:hint="Enter your note title here"
-        android:id="@+id/createtitleofnote" />
+        android:id="@+id/createtitleofnote"
+        android:maxLength="20"/>
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -58,7 +58,13 @@ public class trash extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull NoteViewHolder holder, int position, @NonNull firebasemodel model) {
                 holder.notetitle.setText(model.getTitle());
-                holder.notecontent.setText(model.getContent());
+
+                // Kiểm tra độ dài của nội dung ghi chú
+                String content = model.getContent();
+                if (content.length() > 60) {
+                    content = content.substring(0, 60) + "...";  // Cắt nội dung và thêm dấu ba chấm
+                }
+                holder.notecontent.setText(content);
 
                 holder.menupopbutton.setOnClickListener(v -> {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
