@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -204,8 +205,21 @@ public class notesactivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        // Kiểm tra xem người dùng đã đăng nhập bằng Google chưa
+        if (firebaseUser != null && firebaseUser.getProviderData() != null) {
+            for (UserInfo profile : firebaseUser.getProviderData()) {
+                if (profile.getProviderId().equals("google.com")) {
+                    // Ẩn "Change Password" nếu đăng nhập bằng Google
+                    menu.findItem(R.id.change_password).setVisible(false);
+                    break;
+                }
+            }
+        }
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

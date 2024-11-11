@@ -69,36 +69,36 @@ public class signup extends AppCompatActivity {
         msignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mail=msignupemail.getText().toString().trim();
-                String password=msignuppassword.getText().toString().trim();
+                String mail = msignupemail.getText().toString().trim();
+                String password = msignuppassword.getText().toString().trim();
+                String confirmPassword = ((EditText) findViewById(R.id.signupconfirm_password)).getText().toString().trim();
 
-                if(mail.isEmpty() || password.isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"All Fields are Required",Toast.LENGTH_SHORT).show();
+                if(mail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
                 }
-                else if(password.length()<7)
-                {
-                    Toast.makeText(getApplicationContext(),"Password Should Greater than 7 Digits",Toast.LENGTH_SHORT).show();
+                else if(password.length() < 7) {
+                    Toast.makeText(getApplicationContext(), "Password Should be Greater than 7 Digits", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    /// registered the user to firebase
-
-                    firebaseAuth.createUserWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                else if(!password.equals(confirmPassword)) {
+                    Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Register the user to Firebase
+                    firebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            if(task.isSuccessful())
-                            {
-                                Toast.makeText(getApplicationContext(),"Registration Successfull",Toast.LENGTH_SHORT).show();
+                            if(task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
                                 sendEmailVerification();
+                            } else {
+                                // In ra lỗi chi tiết
+                                Exception exception = task.getException();
+                                if (exception != null) {
+                                    Toast.makeText(getApplicationContext(), "Failed To Register: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed To Register", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(),"Failed To Register",Toast.LENGTH_SHORT).show();
-                            }
-
-
                         }
                     });
 

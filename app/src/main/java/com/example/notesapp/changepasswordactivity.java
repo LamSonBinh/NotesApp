@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ public class changepasswordactivity extends AppCompatActivity {
 
     private EditText mNewPassword, mConfirmPassword, mCurrentPassword;
     private Button mChangePasswordButton;
+    private ImageView mShowCurrentPassword, mShowNewPassword, mShowConfirmPassword;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
 
@@ -38,8 +40,33 @@ public class changepasswordactivity extends AppCompatActivity {
         mConfirmPassword = findViewById(R.id.confirm_password);
         mCurrentPassword = findViewById(R.id.current_password);
         mChangePasswordButton = findViewById(R.id.change_password_button);
+        mShowCurrentPassword = findViewById(R.id.show_current_password);
+        mShowNewPassword = findViewById(R.id.show_new_password);
+        mShowConfirmPassword = findViewById(R.id.show_confirm_password);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
+        // Thiết lập sự kiện click cho các icon mắt
+        mShowCurrentPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility(mCurrentPassword, mShowCurrentPassword);
+            }
+        });
+
+        mShowNewPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility(mNewPassword, mShowNewPassword);
+            }
+        });
+
+        mShowConfirmPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility(mConfirmPassword, mShowConfirmPassword);
+            }
+        });
 
         mChangePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,4 +135,24 @@ public class changepasswordactivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void togglePasswordVisibility(EditText editText, ImageView imageView) {
+        // Lưu vị trí con trỏ
+        int selection = editText.getSelectionStart();
+
+        // Kiểm tra trạng thái hiện tại của mật khẩu và thay đổi inputType
+        if (editText.getInputType() == (android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            // Hiển thị mật khẩu
+            editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            imageView.setImageResource(R.drawable.ic_visibility); // Hiển thị mắt mở
+        } else {
+            // Ẩn mật khẩu
+            editText.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            imageView.setImageResource(R.drawable.ic_visibility_off); // Hiển thị mắt đóng
+        }
+
+        // Đặt lại con trỏ tại vị trí ban đầu
+        editText.setSelection(selection);
+    }
+
 }
