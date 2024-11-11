@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New User"
+            android:text="Tạo tài khoản"
             android:textSize="42sp"
             android:textColor="#FFBD4D"
             android:textStyle="bold">
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nice To See You Here"
+            android:text="Rất vui khi thấy bạn ở đây"
             android:textSize="23sp"
             android:textColor="#FF8596">
         </TextView>
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signupemail"
-            android:hint="Enter Your Email"
+            android:hint="Tài khoản Email"
             android:inputType="textEmailAddress">
         </EditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signuppassword"
-            android:hint="Enter Your Password">
+            android:hint="Mật khẩu">
         </EditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signupconfirm_password"
-            android:hint="Confirm Your Password">
+            android:hint="Xác nhận mật khẩu">
         </EditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +113,7 @@
             android:textStyle="bold"
             android:layout_marginStart="8dp"
             android:textSize="16sp"
-            android:text="Sign Up"
+            android:text="Đăng ký"
             android:layout_centerInParent="true"
             android:textColor="@color/white">
         </TextView>
@@ -121,16 +121,17 @@
 
     <!-- Go to Login Link -->
     <TextView
+        android:id="@+id/gotologin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Want To Login ?"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/black"
         android:layout_below="@id/signup"
-        android:id="@+id/gotologin"
-        android:layout_marginTop="70dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="20dp"
+        android:text="Bạn muốn đăng nhập?"
+        android:textAlignment="center"
+        android:textColor="@color/black">
+
     </TextView>
 
 </RelativeLayout>

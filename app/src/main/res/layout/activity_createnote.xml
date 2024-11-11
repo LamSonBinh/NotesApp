@@ -25,7 +25,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:hint="Enter your note title here"
+        android:hint="Tiêu đề"
         android:id="@+id/createtitleofnote"
         android:maxLength="20"/>
 
@@ -38,7 +38,7 @@
         android:background="#faf7f7"
         android:gravity="top|left"
         android:textColor="@color/black"
-        android:hint="Enter your note content here"
+        android:hint="Nội dung"
         android:layout_below="@id/toolbarofcreatenote"
         android:padding="15dp"
         android:id="@+id/createcontentofnote">
