@@ -24,8 +24,9 @@
     <color name="color3">#ccf6cb</color>
     <color name="color4">#ffe0ac</color>
     <color name="color5">#e5cfe5</color>
+    <color name="blue">#4a4ae8</color>
 
-
+    <color name="button_green">#66d160</color>
 
 
 </resources>

@@ -77,13 +77,13 @@ public class changepasswordactivity extends AppCompatActivity {
 
                 // Kiểm tra nếu trường nhập liệu trống
                 if (newPassword.isEmpty() || confirmPassword.isEmpty() || currentPassword.isEmpty()) {
-                    Toast.makeText(changepasswordactivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(changepasswordactivity.this, "Vui lòng điền vào tất cả các trường", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Kiểm tra mật khẩu xác nhận có khớp với mật khẩu mới không
                 if (!newPassword.equals(confirmPassword)) {
-                    Toast.makeText(changepasswordactivity.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(changepasswordactivity.this, "Mật khẩu mới và mật khẩu xác nhận không khớp", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -101,7 +101,7 @@ public class changepasswordactivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(changepasswordactivity.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(changepasswordactivity.this, "Mật khẩu đã được cập nhật thành công", Toast.LENGTH_SHORT).show();
 
                                                         // Chuyển đến màn hình notesactivity
                                                         Intent intent = new Intent(changepasswordactivity.this, notesactivity.class);
@@ -109,13 +109,13 @@ public class changepasswordactivity extends AppCompatActivity {
                                                         startActivity(intent);
                                                         finish(); // Đóng activity hiện tại
                                                     } else {
-                                                        Toast.makeText(changepasswordactivity.this, "Password update failed", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(changepasswordactivity.this, "Cập nhật mật khẩu không thành công", Toast.LENGTH_SHORT).show();
                                                         Log.e("PasswordChange", "Error updating password", task.getException());
                                                     }
                                                 }
                                             });
                                 } else {
-                                    Toast.makeText(changepasswordactivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(changepasswordactivity.this, "Xác thực không thành công", Toast.LENGTH_SHORT).show();
                                     Log.e("ReauthError", "Error reauthenticating", task.getException());
                                 }
                             }

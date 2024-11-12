@@ -100,11 +100,11 @@ public class trash extends AppCompatActivity {
                             // Xóa ghi chú khỏi Trash
                             deleteNoteFromTrash(docId);
 
-                            Toast.makeText(trash.this, "Note restored", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(trash.this, "Ghi chú đã được khôi phục", Toast.LENGTH_SHORT).show();
                         })
                         .addOnFailureListener(e -> {
                             Log.e("RestoreError", "Failed to restore note", e);
-                            Toast.makeText(trash.this, "Error restoring note", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(trash.this, "Khôi phục ghi chú thất bại", Toast.LENGTH_SHORT).show();
                         });
             }
 
@@ -132,11 +132,11 @@ public class trash extends AppCompatActivity {
                         .delete()
                         .addOnSuccessListener(aVoid -> {
                             Log.d("Trash", "Note deleted permanently");
-                            Toast.makeText(trash.this, "Note deleted permanently", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(trash.this, "Ghi chú đã bị xóa vĩnh viễn", Toast.LENGTH_SHORT).show();
                         })
                         .addOnFailureListener(e -> {
                             Log.e("TrashError", "Failed to delete note permanently", e);
-                            Toast.makeText(trash.this, "Error deleting note permanently", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(trash.this, "Xóa ghi chú vĩnh viễn thất bại", Toast.LENGTH_SHORT).show();
                         });
             }
 

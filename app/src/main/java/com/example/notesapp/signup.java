@@ -74,13 +74,13 @@ public class signup extends AppCompatActivity {
                 String confirmPassword = ((EditText) findViewById(R.id.signupconfirm_password)).getText().toString().trim();
 
                 if(mail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Tất cả các trường đều bắt buộc", Toast.LENGTH_SHORT).show();
                 }
                 else if(password.length() < 7) {
-                    Toast.makeText(getApplicationContext(), "Password Should be Greater than 7 Digits", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Mật khẩu phải lớn hơn 7 chữ số", Toast.LENGTH_SHORT).show();
                 }
                 else if(!password.equals(confirmPassword)) {
-                    Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     // Register the user to Firebase
@@ -88,15 +88,15 @@ public class signup extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                 sendEmailVerification();
                             } else {
                                 // In ra lỗi chi tiết
                                 Exception exception = task.getException();
                                 if (exception != null) {
-                                    Toast.makeText(getApplicationContext(), "Failed To Register: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Đăng ký thất bại: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Failed To Register", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -117,7 +117,7 @@ public class signup extends AppCompatActivity {
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(getApplicationContext(),"Verification Email is Sent, Verify and Log In Again",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Email xác minh đã được gửi, hãy xác minh và đăng nhập lại",Toast.LENGTH_SHORT).show();
                     firebaseAuth.signOut();
                     finish();
                     startActivity(new Intent(signup.this,MainActivity.class));
@@ -127,7 +127,7 @@ public class signup extends AppCompatActivity {
 
         else
         {
-            Toast.makeText(getApplicationContext(),"Failed To Send Verification Email",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Không thể gửi email xác minh",Toast.LENGTH_SHORT).show();
         }
     }
 

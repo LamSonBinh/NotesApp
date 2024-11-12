@@ -136,7 +136,7 @@ public class notesactivity extends AppCompatActivity {
                 popupbutton.setOnClickListener(v -> {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                     popupMenu.setGravity(Gravity.END);
-                    popupMenu.getMenu().add("Edit").setOnMenuItemClickListener(item -> {
+                    popupMenu.getMenu().add("Chỉnh sửa").setOnMenuItemClickListener(item -> {
                         Intent intent = new Intent(v.getContext(), editnoteactivity.class);
                         intent.putExtra("title", firebasemodel.getTitle());
                         intent.putExtra("content", firebasemodel.getContent());
@@ -145,18 +145,18 @@ public class notesactivity extends AppCompatActivity {
                         return false;
                     });
 
-                    popupMenu.getMenu().add("Delete").setOnMenuItemClickListener(item -> {
+                    popupMenu.getMenu().add("Xóa").setOnMenuItemClickListener(item -> {
                         moveNoteToTrash(firebasemodel, docId); // Chuyển ghi chú vào trash
-                        Toast.makeText(v.getContext(), "Note moved to trash", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Ghi chú đã được chuyển vào thùng rác", Toast.LENGTH_SHORT).show();
                         return false;
                     });
 
-                    popupMenu.getMenu().add("Export as PDF").setOnMenuItemClickListener(item -> {
+                    popupMenu.getMenu().add("Xuất file PDF").setOnMenuItemClickListener(item -> {
                         exportNoteToPDF(firebasemodel.getTitle(), firebasemodel.getContent());
                         return false;
                     });
 
-                    popupMenu.getMenu().add("Export as DOCX").setOnMenuItemClickListener(item -> {
+                    popupMenu.getMenu().add("Xuất file DOCX").setOnMenuItemClickListener(item -> {
                         exportNoteToDOCX(firebasemodel.getTitle(), firebasemodel.getContent());
                         return false;
                     });
@@ -307,20 +307,20 @@ public class notesactivity extends AppCompatActivity {
             try (OutputStream out = getContentResolver().openOutputStream(
                     getContentResolver().insert(MediaStore.Files.getContentUri("external"), values))) {
                 pdfDocument.writeTo(out);
-                Toast.makeText(this, "PDF saved to Downloads", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "PDF đã lưu vào Downloads", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error saving PDF", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Lỗi khi lưu PDF", Toast.LENGTH_SHORT).show();
             }
         } else {
             // Lưu cho thiết bị chạy API < 29
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "note.pdf");
             try (FileOutputStream out = new FileOutputStream(file)) {
                 pdfDocument.writeTo(out);
-                Toast.makeText(this, "PDF saved to Downloads", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "PDF đã lưu vào Downloads", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error saving PDF", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Lỗi khi lưu PDF", Toast.LENGTH_SHORT).show();
             }
         }
         pdfDocument.close();
@@ -348,26 +348,26 @@ public class notesactivity extends AppCompatActivity {
 
             Uri uri = getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
             if (uri == null) {
-                Toast.makeText(this, "Failed to create file", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Không tạo được tệp", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             try (OutputStream out = getContentResolver().openOutputStream(uri)) {
                 document.write(out);
-                Toast.makeText(this, "DOCX saved to Downloads", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "DOCX đã lưu vào mục Downloads", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error saving DOCX", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Lỗi khi lưu DOCX", Toast.LENGTH_SHORT).show();
             }
         } else {
             // Lưu cho Android 9 trở xuống
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "note.docx");
             try (FileOutputStream out = new FileOutputStream(file)) {
                 document.write(out);
-                Toast.makeText(this, "DOCX saved to Downloads", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "DOCX đã lưu vào mục Downloads", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error saving DOCX", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Lỗi khi lưu DOCX", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -378,9 +378,9 @@ public class notesactivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1001) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Đã được cấp phép", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Permission denied. Export function will not work.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Quyền bị từ chối. Chức năng xuất sẽ không hoạt động.", Toast.LENGTH_SHORT).show();
             }
         }
     }

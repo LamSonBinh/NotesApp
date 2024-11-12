@@ -75,7 +75,7 @@ public class editnoteactivity extends AppCompatActivity {
 
                 if(newtitle.isEmpty()||newcontent.isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(),"Something is empty",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Tiêu đề và nội dung không để trống",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else
@@ -87,13 +87,13 @@ public class editnoteactivity extends AppCompatActivity {
                     documentReference.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Note is updated",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Cập nhật ghi chú thành công",Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(editnoteactivity.this,notesactivity.class));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(),"Failed To update",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Cập nhật ghi chú thất bại",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

@@ -64,7 +64,7 @@ public class fogotpassword extends AppCompatActivity {
             public void onClick(View v) {
                 String mail = mforgotpassword.getText().toString().trim();
                 if (mail.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter your mail first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Nhập email của bạn trước", Toast.LENGTH_SHORT).show();
                 } else {
                     progressBar.setVisibility(View.VISIBLE); // Hiển thị ProgressBar
 
@@ -74,11 +74,11 @@ public class fogotpassword extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE); // Ẩn ProgressBar
 
                             if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Mail Sent, You can recover your password using mail", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Đã gửi email, Bạn có thể khôi phục mật khẩu bằng email", Toast.LENGTH_SHORT).show();
                                 finish();
                                 startActivity(new Intent(fogotpassword.this, MainActivity.class));
                             } else {
-                                Toast.makeText(getApplicationContext(), "Email is wrong or Account Not Exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Email không đúng hoặc Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

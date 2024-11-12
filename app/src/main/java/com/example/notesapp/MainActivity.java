@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             String password = mloginpassword.getText().toString().trim();
 
             if (mail.isEmpty() || password.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Vui lòng nhập tất cả các trường", Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                             checkEmailVerification();
                         } else {
                             // Nếu đăng nhập thất bại, hiển thị thông báo lỗi chi tiết
-                            Toast.makeText(getApplicationContext(), "Account does not exist or invalid credentials", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Tài khoản không tồn tại hoặc sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
                             mprogressbarofmainactivity.setVisibility(View.INVISIBLE);
                         }
                     }
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (firebaseUser != null && firebaseUser.isEmailVerified()) {
             // Nếu email đã được xác minh, chuyển sang màn hình NotesActivity
-            Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(new Intent(MainActivity.this, notesactivity.class));
         }
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         {
             mprogressbarofmainactivity.setVisibility(View.INVISIBLE);
             // Nếu email chưa được xác minh, yêu cầu người dùng xác minh email
-            Toast.makeText(getApplicationContext(), "Please verify your email first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Vui lòng xác minh email của bạn trước", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();
         }
     }
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Toast.makeText(this, "Google Sign-In failed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Đăng nhập Google không thành công.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -193,11 +193,11 @@ public class MainActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(MainActivity.this, "Google Sign-In Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, notesactivity.class));
                 finish();
             } else {
-                Toast.makeText(MainActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Xác thực không thành công.", Toast.LENGTH_SHORT).show();
             }
         });
     }

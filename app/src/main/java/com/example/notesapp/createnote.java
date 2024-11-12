@@ -72,7 +72,7 @@ public class createnote extends AppCompatActivity {
                 String content=mcreatecontentofnote.getText().toString();
                 if(title.isEmpty() || content.isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(),"Both field are Require",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Tiêu đề và nội dung không được để trống",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -87,13 +87,13 @@ public class createnote extends AppCompatActivity {
                     documentReference.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Note Created Successfully",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Ghi chú đã được tạo thành công",Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(createnote.this,notesactivity.class));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(),"Failed To Create Note",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Tạo ghi chú thất bại",Toast.LENGTH_SHORT).show();
                             mprogressbarofcreatenote.setVisibility(View.INVISIBLE);
                            // startActivity(new Intent(createnote.this,notesactivity.class));
                         }
