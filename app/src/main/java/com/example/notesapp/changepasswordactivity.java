@@ -33,6 +33,11 @@ public class changepasswordactivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepasswordactivity);
 
+        // Đổi tiêu đề của ActionBar thành "Thùng rác"
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Notes LSB");
+        }
+
         // Kích hoạt ActionBar và thêm nút back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

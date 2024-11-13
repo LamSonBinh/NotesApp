@@ -90,7 +90,7 @@ public class notesactivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        getSupportActionBar().setTitle("All Notes");
+        getSupportActionBar().setTitle("Tất cả ghi chú");
 
         mcreatenotesfab.setOnClickListener(v -> startActivity(new Intent(notesactivity.this, createnote.class)));
 

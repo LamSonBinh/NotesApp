@@ -37,6 +37,11 @@ public class trash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trash);
 
+        // Đổi tiêu đề của ActionBar thành "Thùng rác"
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Thùng rác");
+        }
+
         // Kích hoạt nút back trên ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -71,14 +76,14 @@ public class trash extends AppCompatActivity {
                     popupMenu.setGravity(Gravity.END);
 
                     // Thêm mục "Restore" vào menu
-                    popupMenu.getMenu().add("Restore").setOnMenuItemClickListener(item -> {
+                    popupMenu.getMenu().add("Khôi phục").setOnMenuItemClickListener(item -> {
                         String docId = getSnapshots().getSnapshot(position).getId();
                         restoreNote(docId, model); // Phục hồi ghi chú từ Trash
                         return true;
                     });
 
                     // Mục "Delete Permanently" để xóa ghi chú vĩnh viễn
-                    popupMenu.getMenu().add("Delete Permanently").setOnMenuItemClickListener(item -> {
+                    popupMenu.getMenu().add("Xóa vĩnh viễn").setOnMenuItemClickListener(item -> {
                         String docId = getSnapshots().getSnapshot(position).getId();
                         deleteNotePermanently(docId);
                         return true;
