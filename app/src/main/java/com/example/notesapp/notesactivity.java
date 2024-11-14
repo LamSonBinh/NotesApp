@@ -60,6 +60,8 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class notesactivity extends AppCompatActivity {
 
     FloatingActionButton mcreatenotesfab;
@@ -121,6 +123,14 @@ public class notesactivity extends AppCompatActivity {
                 } else {
                     noteViewHolder.notecontent.setText(noteContent);  // Hiển thị đầy đủ nếu ngắn hơn 60 ký tự
                 }
+
+
+                // Hiển thị thời gian tạo ghi chú
+                long createdAt = firebasemodel.getCreatedAt();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String formattedDate = sdf.format(new Date(createdAt));
+                noteViewHolder.createdAtTextView.setText(formattedDate);  // Giả sử bạn có một TextView để hiển thị thời gian
+
 
                 String docId = noteAdapter.getSnapshots().getSnapshot(i).getId();
 

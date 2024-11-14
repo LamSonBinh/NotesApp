@@ -13,6 +13,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     TextView notecontent;
     LinearLayout mnote;
     ImageView menupopbutton; // Thêm ImageView cho menu button
+    TextView createdAtTextView;
 
     public NoteViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,5 +21,6 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
         notecontent = itemView.findViewById(R.id.notecontent);
         mnote = itemView.findViewById(R.id.note);
         menupopbutton = itemView.findViewById(R.id.menupopbutton); // Tìm kiếm menupopbutton
+        createdAtTextView = itemView.findViewById(R.id.createdAtTextView); // Kết nối TextView với ID
     }
 }

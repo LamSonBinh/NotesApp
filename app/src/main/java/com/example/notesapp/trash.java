@@ -71,6 +71,15 @@ public class trash extends AppCompatActivity {
                 }
                 holder.notecontent.setText(content);
 
+
+                // Chuyển đổi timestamp thành thời gian đọc được
+                long timestamp = model.getCreatedAt();  // Giả sử bạn đã lưu trường createdAt trong model
+                String formattedTime = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date(timestamp));
+
+                // Hiển thị thời gian trên giao diện
+                holder.createdAtTextView.setText(formattedTime);
+
+
                 holder.menupopbutton.setOnClickListener(v -> {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                     popupMenu.setGravity(Gravity.END);

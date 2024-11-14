@@ -76,6 +76,15 @@
 
             </TextView>
 
+            <TextView
+                android:id="@+id/createdAtTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00/00/0000 00:00"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"/>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

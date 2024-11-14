@@ -79,23 +79,28 @@ public class createnote extends AppCompatActivity {
 
                     mprogressbarofcreatenote.setVisibility(View.VISIBLE);
 
+
+                    // Lấy thời gian tạo ghi chú
+                    long timestamp = System.currentTimeMillis();  // Lấy thời gian hiện tại dưới dạng long
+
+
                     DocumentReference documentReference=firebaseFirestore.collection("notes").document(firebaseUser.getUid()).collection("myNotes").document();
                     Map<String , Object> note= new HashMap<>();
                     note.put("title",title);
                     note.put("content",content);
+                    note.put("createdAt", timestamp);  // Lưu thời gian tạo ghi chú
 
                     documentReference.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Ghi chú đã được tạo thành công",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(createnote.this,notesactivity.class));
+                            Toast.makeText(getApplicationContext(), "Ghi chú đã được tạo thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(createnote.this, notesactivity.class));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(),"Tạo ghi chú thất bại",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Tạo ghi chú thất bại", Toast.LENGTH_SHORT).show();
                             mprogressbarofcreatenote.setVisibility(View.INVISIBLE);
-                           // startActivity(new Intent(createnote.this,notesactivity.class));
                         }
                     });
 
