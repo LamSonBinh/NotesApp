@@ -33,9 +33,9 @@ public class changepasswordactivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepasswordactivity);
 
-        // Đổi tiêu đề của ActionBar thành "Thùng rác"
+        // Đổi tiêu đề của ActionBar thành "Đổi mật khẩu"
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Notes LSB");
+            getSupportActionBar().setTitle("Đổi mật khẩu");
         }
 
         // Kích hoạt ActionBar và thêm nút back
