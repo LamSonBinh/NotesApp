@@ -11,6 +11,11 @@
         android:title="Đổi mật khẩu"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/archive"
+        android:title="Lưu trữ"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/trash"
         android:title="Thùng rác"
         app:showAsAction="never" />

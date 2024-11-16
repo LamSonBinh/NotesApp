@@ -63,43 +63,52 @@ public class editnoteactivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String collectionName = data.getStringExtra("collectionName");
+        String subCollectionName = data.getStringExtra("subCollectionName");
 
 
         msaveeditnote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(),"savebuton click",Toast.LENGTH_SHORT).show();
+                String newtitle = medittitleofnote.getText().toString();
+                String newcontent = meditcontentofnote.getText().toString();
 
-                String newtitle=medittitleofnote.getText().toString();
-                String newcontent=meditcontentofnote.getText().toString();
-
-                if(newtitle.isEmpty()||newcontent.isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"Tiêu đề và nội dung không để trống",Toast.LENGTH_SHORT).show();
+                if (newtitle.isEmpty() || newcontent.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Tiêu đề và nội dung không để trống", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else
-                {
-                    DocumentReference documentReference=firebaseFirestore.collection("notes").document(firebaseUser.getUid()).collection("myNotes").document(data.getStringExtra("noteId"));
-                    Map<String,Object> note=new HashMap<>();
-                    note.put("title",newtitle);
-                    note.put("content",newcontent);
-                    documentReference.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Cập nhật ghi chú thành công",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(editnoteactivity.this,notesactivity.class));
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(),"Cập nhật ghi chú thất bại",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                } else {
+                    DocumentReference documentReference = firebaseFirestore
+                            .collection(collectionName)  // Collection như "notes" hoặc "archived"
+                            .document(firebaseUser.getUid())
+                            .collection(subCollectionName)  // Sub-collection như "myNotes" hoặc "myArchivedNotes"
+                            .document(data.getStringExtra("noteId"));
 
+                    long timestamp = System.currentTimeMillis();  // Lấy thời gian hiện tại
+
+                    Map<String, Object> note = new HashMap<>();
+                    note.put("title", newtitle);
+                    note.put("content", newcontent);
+                    note.put("createdAt", timestamp);  // Ghi đè createdAt với thời gian hiện tại
+
+                    documentReference.set(note)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getApplicationContext(), "Cập nhật ghi chú thành công", Toast.LENGTH_SHORT).show();
+
+                                if ("archived".equals(collectionName)) {
+                                    startActivity(new Intent(editnoteactivity.this, archived.class));
+                                } else {
+                                    startActivity(new Intent(editnoteactivity.this, notesactivity.class));
+                                }
+                                finish();
+                            })
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(getApplicationContext(), "Cập nhật ghi chú thất bại", Toast.LENGTH_SHORT).show()
+                            );
+                }
             }
         });
+
+
 
 
         String notetitle=data.getStringExtra("title");
@@ -111,12 +120,20 @@ public class editnoteactivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // Chuyển đến NotesActivity thay vì quay lại màn hình trước đó
-            Intent intent = new Intent(editnoteactivity.this, notesactivity.class);
+            String collectionName = data.getStringExtra("collectionName");
+            Intent intent;
+
+            if ("archived".equals(collectionName)) {
+                intent = new Intent(editnoteactivity.this, archived.class);
+            } else {
+                intent = new Intent(editnoteactivity.this, notesactivity.class);
+            }
+
             startActivity(intent);
-            finish(); // Đảm bảo không trở lại màn hình tạo ghi chú
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

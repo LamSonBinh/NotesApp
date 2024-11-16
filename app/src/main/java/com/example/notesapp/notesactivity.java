@@ -151,9 +151,21 @@ public class notesactivity extends AppCompatActivity {
                         intent.putExtra("title", firebasemodel.getTitle());
                         intent.putExtra("content", firebasemodel.getContent());
                         intent.putExtra("noteId", docId);
+                        intent.putExtra("collectionName", "notes");
+                        intent.putExtra("subCollectionName", "myNotes");  // Truyền sub-collection
                         v.getContext().startActivity(intent);
+                        return true;
+                    });
+
+
+
+                    popupMenu.getMenu().add("Lưu trữ").setOnMenuItemClickListener(item -> {
+                        moveNoteToArchived(firebasemodel, docId); // Chuyển ghi chú vào lưu trữ
+                        Toast.makeText(v.getContext(), "Ghi chú đã được lưu trữ", Toast.LENGTH_SHORT).show();
                         return false;
                     });
+
+
 
                     popupMenu.getMenu().add("Xóa").setOnMenuItemClickListener(item -> {
                         moveNoteToTrash(firebasemodel, docId); // Chuyển ghi chú vào trash
@@ -249,6 +261,9 @@ public class notesactivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.trash) { // Xử lý cho Trash
             startActivity(new Intent(notesactivity.this, trash.class));
+            return true;
+        } else if (itemId == R.id.archive) {
+            startActivity(new Intent(notesactivity.this, archived.class));
             return true;
         }
 
@@ -394,6 +409,42 @@ public class notesactivity extends AppCompatActivity {
             }
         }
     }
+
+
+
+
+    private void moveNoteToArchived(firebasemodel note, String docId) {
+        if (firebaseUser != null) {
+            // Thêm ghi chú vào collection "archived"
+            firebaseFirestore.collection("archived")
+                    .document(firebaseUser.getUid())
+                    .collection("myArchivedNotes")
+                    .document(docId)
+                    .set(note)
+                    .addOnSuccessListener(aVoid -> Log.d("Archived", "Note moved to archived"))
+                    .addOnFailureListener(e -> {
+                        Log.e("ArchivedError", "Error moving note to archived", e);
+                        Toast.makeText(getApplicationContext(), "Có lỗi khi di chuyển ghi chú", Toast.LENGTH_SHORT).show();
+                    });
+
+            // Xóa ghi chú khỏi collection "notes"
+            DocumentReference documentReference = firebaseFirestore.collection("notes")
+                    .document(firebaseUser.getUid())
+                    .collection("myNotes")
+                    .document(docId);
+            documentReference.delete()
+                    .addOnSuccessListener(aVoid -> Log.d("Archived", "Note removed from 'notes' collection"))
+                    .addOnFailureListener(e -> {
+                        Log.e("Error", "Failed to remove note from 'notes' collection", e);
+                        Toast.makeText(getApplicationContext(), "Có lỗi khi xóa ghi chú", Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Log.e("Firebase", "User is not logged in");
+            Toast.makeText(getApplicationContext(), "Vui lòng đăng nhập lại", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 
 }
