@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tạo mã PIN"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"/>
+
+    <!-- PIN EditText -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pinInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleText"
+        android:layout_marginTop="40dp"
+        android:hint="Nhập mã PIN">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pinEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:importantForAccessibility="yes"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="16dp"
+            android:textColor="@android:color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Confirm PIN EditText -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPinInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pinInputLayout"
+        android:layout_marginTop="20dp"
+        android:hint="Xác nhận mã PIN">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPinEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:importantForAccessibility="yes"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="16dp"
+            android:textColor="@android:color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Create PIN Button -->
+    <Button
+        android:id="@+id/createPinButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tạo mã PIN"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/button_green"
+        android:layout_below="@id/confirmPinInputLayout"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center"/>
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/backToNotesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quay lại"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@android:color/darker_gray"
+        android:layout_below="@id/createPinButton"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center"/>
+
+</RelativeLayout>

@@ -17,6 +17,10 @@
         android:theme="@style/Theme.NotesApp"
         tools:targetApi="31">
         <activity
+            android:name=".PinCreationActivity" />
+        <activity
+            android:name=".PinActivity" />
+        <activity
             android:name=".archived"
             android:exported="false" />
         <activity

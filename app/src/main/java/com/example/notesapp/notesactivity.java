@@ -2,6 +2,7 @@ package com.example.notesapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -159,6 +160,10 @@ public class notesactivity extends AppCompatActivity {
 
 
 
+
+
+
+
                     popupMenu.getMenu().add("Lưu trữ").setOnMenuItemClickListener(item -> {
                         moveNoteToArchived(firebasemodel, docId); // Chuyển ghi chú vào lưu trữ
                         Toast.makeText(v.getContext(), "Ghi chú đã được lưu trữ", Toast.LENGTH_SHORT).show();
@@ -263,7 +268,24 @@ public class notesactivity extends AppCompatActivity {
             startActivity(new Intent(notesactivity.this, trash.class));
             return true;
         } else if (itemId == R.id.archive) {
-            startActivity(new Intent(notesactivity.this, archived.class));
+            // Kiểm tra xem người dùng đã tạo mã PIN chưa
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                String userId = currentUser.getUid();
+                SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+                String userPin = sharedPreferences.getString(userId + "_userPin", null); // Lấy mã PIN theo UID của người dùng
+
+                if (userPin == null || userPin.isEmpty()) {
+                    // Nếu chưa có mã PIN, yêu cầu tạo mã PIN
+                    Intent intent = new Intent(notesactivity.this, PinCreationActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Nếu đã có mã PIN, yêu cầu nhập mã PIN
+                    Intent intent = new Intent(notesactivity.this, PinActivity.class);
+                    startActivity(intent);
+                }
+            }
+
             return true;
         }
 
@@ -445,6 +467,17 @@ public class notesactivity extends AppCompatActivity {
     }
 
 
+
+
+
+
+    private void saveUserPin(String pin) {
+        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();  // Lấy UID của người dùng hiện tại
+        editor.putString(userId + "_userPin", pin);  // Lưu mã PIN cho người dùng theo UID
+        editor.apply();
+    }
 
 
 }

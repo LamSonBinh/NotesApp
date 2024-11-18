@@ -2,6 +2,7 @@ package com.example.notesapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -55,6 +56,13 @@ public class archived extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Ghi chú đã lưu trữ");
         }
+
+
+        // Không cần kiểm tra mã PIN nữa ở đây, chỉ làm việc với ghi chú đã lưu trữ
+        archivedRecyclerView = findViewById(R.id.recyclerview);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         // Kích hoạt nút back trên ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -227,6 +235,13 @@ public class archived extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            // Khi người dùng thoát khỏi màn hình Lưu trữ, set lại isPinVerified thành false
+            SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isPinVerified", false); // Đặt lại trạng thái là chưa xác thực mã PIN
+            editor.apply();
+
+
             // Quay về NotesActivity
             Intent intent = new Intent(archived.this, notesactivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Đảm bảo không quay lại Archived
