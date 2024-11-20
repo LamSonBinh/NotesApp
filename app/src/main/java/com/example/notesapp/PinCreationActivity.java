@@ -34,15 +34,22 @@ public class PinCreationActivity extends AppCompatActivity {
     }
 
     private void createPin() {
-        String pin = pinEditText.getText().toString();
-        String confirmPin = confirmPinEditText.getText().toString();
+        String pin = pinEditText.getText().toString().trim();
+        String confirmPin = confirmPinEditText.getText().toString().trim();
 
+        // Kiểm tra nếu mã PIN hoặc xác nhận mã PIN để trống
+        if (pin.isEmpty() || confirmPin.isEmpty()) {
+            Toast.makeText(PinCreationActivity.this, "Vui lòng nhập mã PIN và xác nhận mã PIN.", Toast.LENGTH_SHORT).show();
+            return; // Kết thúc phương thức nếu một trong hai trường trống
+        }
+
+        // Kiểm tra nếu mã PIN và xác nhận mã PIN không khớp
         if (pin.equals(confirmPin)) {
             // Lấy UID của người dùng hiện tại
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
             if (currentUser != null) {
-                String userId = currentUser.getUid();  // UID của người dùng
+                String userId = currentUser.getUid(); // UID của người dùng
 
                 // Lưu mã PIN vào SharedPreferences theo UID
                 SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
@@ -51,7 +58,7 @@ public class PinCreationActivity extends AppCompatActivity {
                 editor.putBoolean(userId + "_isPinVerified", false); // Chưa xác thực mã PIN
                 editor.apply();
 
-                // Sau khi tạo mã PIN xong, chuyển đến màn hình yêu cầu nhập mã PIN
+                // Chuyển đến màn hình yêu cầu nhập mã PIN
                 Intent intent = new Intent(PinCreationActivity.this, PinActivity.class);
                 startActivity(intent);
                 finish();
@@ -61,6 +68,7 @@ public class PinCreationActivity extends AppCompatActivity {
             Toast.makeText(PinCreationActivity.this, "Mã PIN không khớp. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void backToNotesActivity() {
         // Quay lại màn hình NotesActivity
